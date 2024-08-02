@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 public class Question {
 
-	@Id
+	@Id  // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
