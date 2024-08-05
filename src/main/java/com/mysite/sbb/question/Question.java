@@ -1,7 +1,9 @@
-package com.mysite.sbb;
+package com.mysite.sbb.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.mysite.sbb.answer.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,6 +38,6 @@ public class Question {
 	// 질문글을 통한 답변글을 참조.
 	// 질문글을 삭제하면, 답변글도 함께 삭제.  cascade = CascadeType.REMOVE
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-	private List<Answer> answerList;
+	private List<Answer> answerList; // 답변이 여러개이므로 List<Answer>
 	
 }

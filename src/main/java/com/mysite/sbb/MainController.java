@@ -16,4 +16,9 @@ public class MainController {
 		log.info("index");
 		return "안녕하세요 스프링부트 JPA 학습을 진행합니다.";
 	}
+	
+	@GetMapping("/")
+	public String root() {
+		return "redirect:/question/list";
+	}
 }

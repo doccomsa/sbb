@@ -1,6 +1,8 @@
-package com.mysite.sbb;
+package com.mysite.sbb.answer;
 
 import java.time.LocalDateTime;
+
+import com.mysite.sbb.question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +31,6 @@ public class Answer {
 	
 	// 답변글을 통한 질문글을 참조.
 	@ManyToOne
-	private Question question;
+	private Question question;  // 질문데이타는 1개이므로 List컬렉션 사용안함
 	
 }

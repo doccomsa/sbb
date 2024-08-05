@@ -10,6 +10,12 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.QuestionRepository;
 
 @SpringBootTest  // 스프링부트의 테스트용 클래스라는 것을 의미
 class SbbApplicationTests {
@@ -20,6 +26,7 @@ class SbbApplicationTests {
 	@Autowired
 	private AnswerRepository answerRepository;
 	
+	@Transactional
 	@Test  // 아래 메서드는 JUnit 환경에서 테스트하기위한 메서드이다.
 	void testJpa() {
 		/*
@@ -65,7 +72,7 @@ class SbbApplicationTests {
 		q.setSubject("수정한 제목");
 		this.questionRepository.save(q); // 삽입(insert), 수정(update)시 save()메서드 사용
 		
-		4)
+		7)
 		assertEquals(2, this.questionRepository.count());
 		Optional<Question> oq = this.questionRepository.findById(3);
 		assertTrue(oq.isPresent());
@@ -73,7 +80,7 @@ class SbbApplicationTests {
 		this.questionRepository.delete(q);
 		assertEquals(1, this.questionRepository.count());
 		
-		5)
+		8)
 		Optional<Question> oq = this.questionRepository.findById(4);
 		assertTrue(oq.isPresent());
 		Question q = oq.get(); // 질문글 참조.
@@ -83,11 +90,33 @@ class SbbApplicationTests {
 		a.setQuestion(q); // 어떤 질문글의 답변글인지에 정보작업. mybatis에서는 부모의 일련번호를 사용하지만, JPA에서는 다르다.
 		a.setCreateDate(LocalDateTime.now());
 		this.answerRepository.save(a);
-		*/
-		Optional<Answer> oa = this.answerRepository.findById(1); // left join
+		
+		9)
+		// 일련번호가 1인 답변글   select * from answer where id = 1 쿼리로 동작하는 것이 아니라 left join 으로 작동된다.
+		Optional<Answer> oa = this.answerRepository.findById(1); // left join 로그에서 확인 할것.
 		assertTrue(oa.isPresent());
 		Answer a = oa.get();
-		assertEquals(4, a.getQuestion().getId()); // 질문글의 3번글을 보고 답변글을 저장.
+		assertEquals(4, a.getQuestion().getId()); // 질문글의 4번글을 보고 답변글을 저장.
+		
+		
+		// 답변 데이터를 통해 질문 데이터 찾기 vs 질문 데이터를 통해 답변 데이터 찾기
+		Optional<Question> oq = this.questionRepository.findById(4);
+		assertTrue(oq.isPresent());
+		
+		// 작업1과 작업2과 테스트환경에서는 하나의 단위로 관리되어야 하므로, @Transactional 사용해야 한다.
+		// 지연방식이 기본값이므로 작업1
+		Question q = oq.get(); // 질문글참조.
+		
+		// 질문글에 대한 답변글 참조
+		// q라는 질문객체를 조회할 때, 미리 answer리스트를 모두 가져오는 방식을 즉시(Eager)방식이라고 한다.
+		//                       필요한 시점에 가져오는 방식을 지연(Lazy)방식이라고 한다.
+		// 작업2
+		List<Answer> answserList = q.getAnswerList();
+		
+		assertEquals(2, answserList.size());
+		assertEquals("네 자동으로 생성됩니다.", answserList.get(0).getContent());
+		
+		*/
 		
 	}
 

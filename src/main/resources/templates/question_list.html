@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">  
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">제목</th>
+      <th scope="col">작성일시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="question : ${questionList}">
+      <td><a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a></td>
+      <td th:text="${question.createDate}">@mdo</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
