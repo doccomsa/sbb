@@ -3,8 +3,7 @@ run-name: Go Go
 on:
   push:
     branches:
-      - production
-      - 'releases/**'
+      - main   
 jobs:
   build-with-gradle:
     runs-on: ubuntu-22.04
