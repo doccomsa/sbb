@@ -2,6 +2,7 @@ package com.mysite.sbb.question;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,12 +27,17 @@ public class QuestionController {
 	// 기본구조는 QuestionService 를 사용해야 하지만, 현재는 직접 리포지터를 사용한다.
 	private final QuestionService questionService;
 	
+	// http://localhost:8080/question/list?page=0
 	@GetMapping("/list")
 //	@ResponseBody
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 		
-		List<Question> questionList = this.questionService.getList(); // 페이징기능이 없는 메서드임.
-		model.addAttribute("questionList", questionList);
+//		List<Question> questionList = this.questionService.getList(); // 페이징기능이 없는 메서드임.
+//		model.addAttribute("questionList", questionList);
+		
+		// 목록과 페이징정보 둘다 존재한다.
+		Page<Question> paging = this.questionService.getList(page);
+		model.addAttribute("paging", paging);
 		
 		return "question_list";
 	}

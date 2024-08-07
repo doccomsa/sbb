@@ -16,15 +16,19 @@ import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 
 @SpringBootTest  // 스프링부트의 테스트용 클래스라는 것을 의미
 class SbbApplicationTests {
 
 	@Autowired  // 롬복 어노테인션 사용하면 안됨.
 	private QuestionRepository questionRepository;
+//	
+//	@Autowired
+//	private AnswerRepository answerRepository;
 	
 	@Autowired
-	private AnswerRepository answerRepository;
+	private QuestionService questionService;
 	
 	@Transactional
 	@Test  // 아래 메서드는 JUnit 환경에서 테스트하기위한 메서드이다.
@@ -117,6 +121,18 @@ class SbbApplicationTests {
 		assertEquals("네 자동으로 생성됩니다.", answserList.get(0).getContent());
 		
 		*/
+		// 테스트 데이터 반영안됨.
+		for(int i=1; i<=300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+			String content = "내용무";
+//			this.questionService.create(subject, content);
+			
+			Question q = new Question();
+			q.setSubject(subject);
+			q.setContent(content);
+			q.setCreateDate(LocalDateTime.now());
+			this.questionRepository.save(q);
+		}
 		
 	}
 
