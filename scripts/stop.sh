@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # stop.sh
 
-PROJECT="sbs-0.0.1"
+PROJECT="sbs-1.0.0"
+PROJECT_NAME=sbb
 PROJECT_FULL_PATH_01="/home/ec2-user/app/step1"
 JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
@@ -14,11 +15,12 @@ if [ ! -d $LOG_PATH ]; then
     mkdir $LOG_PATH
 fi
 
-CURRENT_PID=$(pgrep -f $JAR_FILE)
+CURRENT_PID=$(pgrep -f $PROJECT_NAME)
 
-if [ -z $CURRENT_PID ]; then
+if [ -z "$CURRENT_PID" ]; then
   echo "$NOW_DATETIME :: $JAR_FILE :: There is no process!" >> $DEPLOY_LOG
 else
   echo "$NOW_DATETIME :: $JAR_FILE :: $CURRENT_PID stopped!" >> $DEPLOY_LOG  
-  kill -9 $CURRENT_PID
+  kill -15 $CURRENT_PID
+  sleep 5
 fi
