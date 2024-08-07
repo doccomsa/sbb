@@ -34,7 +34,6 @@ jobs:
     - name: Build with Gradle
       # uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2  
       run: ./gradlew clean build --exclude-task test
-      # working-directory: ./${{ env.PROJECT_NAME }}   
             
     - name: AWS credential 설정
       uses: aws-actions/configure-aws-credentials@v4
