@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # start.sh
 
-PROJECT="sbs-1.0.0"
+PROJECT="sbb-1.0.0"
 PROJECT_FULL_PATH_01="/home/ec2-user/app/step1/sbb/build/libs"
 JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
