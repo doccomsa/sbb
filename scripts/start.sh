@@ -2,7 +2,7 @@
 # start.sh
 
 PROJECT="sbs-1.0.0"
-PROJECT_FULL_PATH_01="/home/ec2-user/app/step1"
+PROJECT_FULL_PATH_01="/home/ec2-user/app/step1/sbb"
 JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
 
