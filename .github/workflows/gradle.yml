@@ -46,6 +46,9 @@ jobs:
     # (4) 전송할 파일을 담을 디렉토리 생성
     - name: Make Directory for deliver
       run: mkdir deploy
+      
+    - name: Make Directory for deliver2
+      run: chmod 700 ./${{ env.PROJECT_NAME }}/build/libs/*.jar
 
     # (5) Jar 파일 Copy
     - name: Copy Jar
