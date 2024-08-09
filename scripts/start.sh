@@ -2,9 +2,9 @@
 # start.sh
 
 PROJECT="sbb-1.0.0"
-PROJECT_FULL_PATH_01="/home/ec2-user/app/step1"
-JAR_LIB="/sbb/build/libs"
-JAR_FILE="$PROJECT_FULL_PATH_01$JAR_LIB/$PROJECT.jar"
+PROJECT_FULL_PATH_01="/home/ec2-user/app/step1/sbb"
+#JAR_LIB="/sbb/build/libs"
+JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
 
 APP_LOG="$LOG_PATH/application.log"
