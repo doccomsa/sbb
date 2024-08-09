@@ -48,7 +48,7 @@ jobs:
 
     # (5) Jar 파일 Copy
     - name: Copy Jar
-      run: cp build/libs/*.jar ./deploy/
+      run: cp ./${{ env.PROJECT_NAME }}/build/libs/*.jar ./deploy/
 
     # (6) appspec.yml Copy
     - name: Copy appspec
@@ -88,9 +88,9 @@ jobs:
     - name: Deploy to AWS EC2 from S3
       run: |
         aws deploy create-deployment \
-          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --deployment-group-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
           --s3-location bucket=${{env.AWS_S3_BUCKET}},key=${{env.ZIP_FILE}}.zip,bundleType=zip
     
     
