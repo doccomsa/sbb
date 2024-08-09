@@ -11,7 +11,7 @@ env:
   AWS_REGION: ap-northeast-2
   AWS_S3_BUCKET: ezen-github-actions-s3-bucket
   AWS_CODE_DEPLOY_APPLICATION: sbb-deploy
-  AWS_CODE_DEPLOY_GROUP: sbb-deploy-group
+  AWS_CODE_DEPLOY_GROUP: sbb-deploy-group2
 
 jobs:
   build:
@@ -84,22 +84,22 @@ jobs:
         ./${{ env.ZIP_FILE }}.zip s3://${{ env.AWS_S3_BUCKET }}
 
     # (11) S3 버킷에 있는 파일을 대상으로 CodeDeploy application 실행  
-    - name: Deploy to AWS EC2 from S3
-      run: |
-        aws deploy create-deployment \
-          --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} \
-          --s3-location bucket=${{env.AWS_S3_BUCKET}},key=${{env.ZIP_FILE}}.zip,bundleType=zip
-   
-    #- name: S3에 업로드
-    #  run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
-    
-    #- name: EC2에 배포
+    #- name: Deploy to AWS EC2 from S3
     #  run: |
     #    aws deploy create-deployment \
     #      --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
     #      --deployment-config-name CodeDeployDefault.AllAtOnce \
-    #      --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} \ 
-    #      --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
+    #      --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} \
+    #      --s3-location bucket=${{env.AWS_S3_BUCKET}},key=${{env.ZIP_FILE}}.zip,bundleType=zip
+   
+    #- name: S3에 업로드
+    #  run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
+    
+    - name: EC2에 배포
+      run: |
+        aws deploy create-deployment \
+          --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} \ 
+          --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
       
