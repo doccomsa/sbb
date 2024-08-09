@@ -11,7 +11,7 @@ env:
   AWS_REGION: ap-northeast-2
   AWS_S3_BUCKET: ezen-github-actions-s3-bucket
   AWS_CODE_DEPLOY_APPLICATION: sbb-deploy
-  AWS_CODE_DEPLOY_GROUP: sbb-deploy-group2
+  AWS_CODE_DEPLOY_GROUP: sbb-deploy-group
 
 jobs:
   build:
