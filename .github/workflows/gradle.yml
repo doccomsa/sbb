@@ -59,14 +59,14 @@ jobs:
       run: cp ./scripts/* ./deploy/
 
     # (8) 압축파일 생성
-    - name: Set NOW_DATETIME as env variable
-      run:
-        echo "NOW_DATETIME=$(date "+%Y-%m-%d-%aT%H.%M.%S" -d 9hours)" >> $GITHUB_ENV
-    - name: Set ZIP_FILE as env variable
-      run:
-        echo "ZIP_FILE=${PROJECT_NAME}_${NOW_DATETIME}" >> $GITHUB_ENV
-    - name: Make zip file
-      run: zip -r -qq -j ./${{ env.ZIP_FILE }}.zip ./deploy/*
+    #- name: Set NOW_DATETIME as env variable
+    #  run:
+    #    echo "NOW_DATETIME=$(date "+%Y-%m-%d-%aT%H.%M.%S" -d 9hours)" >> $GITHUB_ENV
+    #- name: Set ZIP_FILE as env variable
+    #  run:
+    #    echo "ZIP_FILE=${PROJECT_NAME}_${NOW_DATETIME}" >> $GITHUB_ENV
+    #- name: Make zip file
+    #  run: zip -r -qq -j ./${{ env.ZIP_FILE }}.zip ./deploy/*
           
     # (9) AWS 인증 (IAM 사용자 Access Key, Secret Key 활용)
     - name: AWS credential 설정
