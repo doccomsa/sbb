@@ -48,7 +48,7 @@ jobs:
 
     # (5) Jar 파일 Copy
     - name: Copy Jar
-      run: cp ./${{ env.PROJECT_NAME }}/build/libs/*.jar ./deploy/
+      run: cp /build/libs/*.jar ./deploy/
 
     # (6) appspec.yml Copy
     - name: Copy appspec
