@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.user.SiteUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,5 +41,9 @@ public class Question {
 	// 질문글을 삭제하면, 답변글도 함께 삭제.  cascade = CascadeType.REMOVE
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	private List<Answer> answerList; // 답변이 여러개이므로 List<Answer>
+	
+	// 질문글 작성자.  한 사용자가 여러개 게시글작성(1:N)
+	@ManyToOne
+	private SiteUser author;
 	
 }

@@ -47,10 +47,13 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	// 로그인주소는 설정과 동일하게 작업.
 	@GetMapping("/login")
 	public String login() {
 		return "login_form";
 	}
+	
+	// 로그아웃주소는 작업하지 않는다. 어디서? SecurityCofnig.java 스프링시큐리티에서 설정한다.
 	
 	
 }

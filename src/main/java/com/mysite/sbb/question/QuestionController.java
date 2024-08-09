@@ -1,8 +1,10 @@
 package com.mysite.sbb.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mysite.sbb.answer.AnswerForm;
+import com.mysite.sbb.user.SiteUser;
+import com.mysite.sbb.user.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,7 @@ public class QuestionController {
 
 	// 기본구조는 QuestionService 를 사용해야 하지만, 현재는 직접 리포지터를 사용한다.
 	private final QuestionService questionService;
+	private final UserService userService;
 	
 	// http://localhost:8080/question/list?page=0
 	@GetMapping("/list")
@@ -53,14 +58,16 @@ public class QuestionController {
 		return "question_detail"; // 답변 폼이 존재하기때문에 파라미터로 AnswerForm answerForm 사용한다.
 	}
 	
+	// 인증된 사용자만 질문글 작성하기
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/create")
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form";
 	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create")
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult ) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal ) {
 		
 		
 		if(bindingResult.hasErrors()) {
@@ -68,7 +75,9 @@ public class QuestionController {
 			return "question_form";
 		}
 		
-		this.questionService.create(questionForm.getSubject(), questionForm.getContent());
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		
+		this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		
 		return "redirect:/question/list";
 	}

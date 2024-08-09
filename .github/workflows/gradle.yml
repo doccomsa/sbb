@@ -40,7 +40,7 @@ jobs:
     - name: Build with Gradle
       # uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2  
       run: ./gradlew clean build -x test
-      # working-directory: ./${{ env.PROJECT_NAME }}  
+      working-directory: ./${{ env.PROJECT_NAME }}  
           
     # (9) AWS 인증 (IAM 사용자 Access Key, Secret Key 활용)
     - name: AWS credential 설정
